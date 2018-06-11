@@ -1,11 +1,27 @@
 package edu.nicholaidudakiwwarrick.advancedjava;
 
+import org.joda.time.DateTime;
+
+import java.util.List;
+
 public interface StockService {
     /**
-    * Return the current price for a share of stock for the given symbol
-    * @param symbol the stock symbol of the company you want a quote for.
-    *               e.g. APPL for APPLE
-    * @return a <CODE>StockQuote</CODE> instance
+     * Return the current price for a share of stock for the given symbol
+     * @param symbol the stock symbol of the company you want a quote for.
+     *               e.g. APPL for APPLE
+     * @param date the date of the stock quote needed
+     * @return a <CODE>StockQuote</CODE> instance
     */
-    StockQuote getQuote(String symbol);
+    StockQuote getQuote(String symbol, DateTime date);
+
+
+    /**
+     * Get a historical list of stock quotes for the provide symbol
+     * @param symbol the stock symbol to search for
+     * @param startDate the date of the first stock quote
+     * @param endDate the date of the last stock quote
+     * @return a list of StockQuote instances. One for each day in the range specified.
+     *
+    */
+    List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate);
 }
