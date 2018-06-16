@@ -24,4 +24,16 @@ public interface StockService {
      *
     */
     List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate);
+
+    /**
+     * Get a historical list of stock quotes for the provide symbol
+     * @param symbol the stock symbol to search for
+     * @param startDate the date of the first stock quote
+     * @param endDate the date of the last stock quote
+     * @param interval the interval per day to return a stock quote
+     *                 e.g. if IntervalEnum.DAILY is specified, one StockQuote per
+     *                 day will be returned
+     * @return a list of StockQuote instances. One for each day in the range specified.
+    */
+    List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval);
 }

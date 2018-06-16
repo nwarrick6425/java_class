@@ -3,6 +3,7 @@ package edu.nicholaidudakiwwarrick.advancedjava;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class StockQuoteApplication {
      * @param args an array that contains elements:
      *             <code>String</code> representation of stock symbol, start date, and end date
      */
-    public static void main(String[] args) {
+    public static void main(@NotNull String[] args) {
 
         // create a StockService instance using the StockServiceFactory static factory method
         StockService basicStockService = StockServiceFactory.newInstance();
@@ -34,6 +35,33 @@ public class StockQuoteApplication {
         for (StockQuote quote : stockList) {
             System.out.println(quote.toString());
         }
+
+        // Print multiple stock quotes between the period at the given interval
+        System.out.println("Print multiple stock quotes for the given date range at the given interval");
+        if(args[3].toUpperCase().equals("HOURLY")) {
+            List<StockQuote> intervalStockList =
+                    basicStockService.getQuote(args[0], startDate, endDate, IntervalEnum.HOURLY);
+
+            for (StockQuote quote : intervalStockList) {
+                System.out.println(quote.toString());
+            }
+        } else if(args[3].toUpperCase().equals("HALF_DAY")) {
+            List<StockQuote> intervalStockList =
+                    basicStockService.getQuote(args[0], startDate, endDate, IntervalEnum.HALF_DAY);
+
+            for (StockQuote quote : intervalStockList) {
+                System.out.println(quote.toString());
+            }
+        } else if(args[3].toUpperCase().equals("DAILY")) {
+            List<StockQuote> intervalStockList =
+                    basicStockService.getQuote(args[0], startDate, endDate, IntervalEnum.DAILY);
+
+            for (StockQuote quote : intervalStockList) {
+                System.out.println(quote.toString());
+            }
+        }
+
+
 
     }
 
