@@ -69,9 +69,11 @@ public final class StockQuote {
             return true;
         if (!(o instanceof StockQuote))
             return false;
-        StockQuote sq = (StockQuote)o;
+        StockQuote stockQuote = (StockQuote)o;
 
-        return sq.symbol.equals(symbol) && sq.price.equals(price) && sq.date.equals(date);
+        return stockQuote.symbol.equals(this.symbol)
+                && stockQuote.price.equals(this.price)
+                && stockQuote.date.equals(this.date);
     }
 
     /**
