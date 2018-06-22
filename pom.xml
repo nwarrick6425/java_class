@@ -34,5 +34,10 @@
         <artifactId>validation-api</artifactId>
         <version>1.0.0.GA</version>
     </dependency>
+    <dependency>
+        <groupId>org.apache.ibatis</groupId>
+        <artifactId>ibatis-sqlmap</artifactId>
+        <version>2.3.4.726</version>
+    </dependency>
   </dependencies>
 </project>
