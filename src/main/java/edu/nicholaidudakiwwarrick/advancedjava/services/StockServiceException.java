@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
 /**
  * Used to signal a problem with the StockService.

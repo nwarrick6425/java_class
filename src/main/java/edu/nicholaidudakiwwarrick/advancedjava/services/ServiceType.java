@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
 /**
  * Basic enumeration to represent stock service types returned by the service factory

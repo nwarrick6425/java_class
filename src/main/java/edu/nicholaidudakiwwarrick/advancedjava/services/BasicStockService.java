@@ -1,5 +1,7 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
+import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
+import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;

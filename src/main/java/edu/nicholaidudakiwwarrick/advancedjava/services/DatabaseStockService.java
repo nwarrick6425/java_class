@@ -1,5 +1,9 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
+import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
+import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseConnectionException;
+import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseUtils;
+import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
