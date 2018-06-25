@@ -19,12 +19,14 @@ public final class BasicStockService implements StockService {
 
     /**
      * Constructor - prevents instantiation of object
-     *               object creation is delegated to static StockServiceFactory
+     *               object creation is delegated to static {@code StockServiceFactory}
      */
     protected BasicStockService() {
     }
 
     /**
+     * Returns a {@code StockQuote} instance with the specified symbol and date
+     *
      * @param symbol the stock symbol of the company you want a quote for.
      *               e.g. APPL for APPLE
      * @return the new stock quote
@@ -34,6 +36,8 @@ public final class BasicStockService implements StockService {
     }
 
     /**
+     * Returns a {@code List<StockQuote>} instances for the specified symbol for the period of time
+     *
      * @param symbol the stock symbol to search for
      * @param startDate the date of the first stock quote
      * @param endDate the date of the last stock quote
@@ -48,6 +52,31 @@ public final class BasicStockService implements StockService {
             result.add(new StockQuote(symbol, startPrice, date));
             startPrice = startPrice.add(new BigDecimal(new Random().nextInt(15) - 3.18));
             date = date.plusDays(1);
+        }
+        return result;
+    }
+
+    /**
+     * Returns a {@code List<StockQuote>} instances for the specified symbol during the period of time
+     * at a set interval (e.g., Hourly, Half Day, or Daily)
+     *
+     * @param symbol the stock symbol to search for
+     * @param startDate the date of the first stock quote
+     * @param endDate the date of the last stock quote
+     * @param interval the interval per day to return a stock quote
+     *                 e.g. if IntervalEnum.DAILY is specified, one StockQuote per
+     *                 day will be returned
+     * @return a List containing the <code>StockQuote</code> instances for each day of the interval
+     */
+    public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) {
+        DateTime date = new DateTime(startDate);
+        List<StockQuote> result = new ArrayList<StockQuote>();
+        BigDecimal startPrice = new BigDecimal(100);
+
+        while (date.isBefore(endDate)) {
+            result.add(new StockQuote(symbol, startPrice, date));
+            startPrice = startPrice.add(new BigDecimal(new Random().nextInt(15) - 3.18));
+            date = date.plusHours(interval.amount());
         }
         return result;
     }

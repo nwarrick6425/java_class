@@ -11,7 +11,7 @@ public class StockQuoteApplicationTest {
 
     @Before
     public void setup() {
-        args = new String[]{"GOOG", "2018-06-08 00:00:00", "2018-06-15 00:00:00"};
+        args = new String[]{"GOOG", "2018-06-08 00:00:00", "2018-06-15 00:00:00", "HALF_DAY"};
     }
 
 

@@ -1,8 +1,12 @@
 package edu.nicholaidudakiwwarrick.advancedjava;
 
+import jdk.nashorn.internal.ir.annotations.Immutable;
+import javax.validation.constraints.NotNull;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -13,6 +17,7 @@ import java.text.NumberFormat;
  *
  * @author Nicholai Dudakiw-Warrick
  */
+@Immutable
 public final class StockQuote {
 
     public static final String DATE_PATTERN = "YYYY-MM-dd HH:mm:ss";
@@ -28,7 +33,7 @@ public final class StockQuote {
      * @param price     current price for given date
      * @param date      date at which the stock quote is requested
      */
-    public StockQuote (String symbol, BigDecimal price, DateTime date) {
+    public StockQuote (@NotNull String symbol, @NotNull BigDecimal price, @NotNull DateTime date) {
         this.symbol = symbol;
         this.price = price;
         this.date = date;
@@ -64,9 +69,11 @@ public final class StockQuote {
             return true;
         if (!(o instanceof StockQuote))
             return false;
-        StockQuote sq = (StockQuote)o;
+        StockQuote stockQuote = (StockQuote)o;
 
-        return sq.symbol.equals(symbol) && sq.price.equals(price) && sq.date.equals(date);
+        return stockQuote.symbol.equals(this.symbol)
+                && stockQuote.price.equals(this.price)
+                && stockQuote.date.equals(this.date);
     }
 
     /**
