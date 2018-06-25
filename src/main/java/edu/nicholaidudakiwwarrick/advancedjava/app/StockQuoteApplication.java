@@ -1,5 +1,11 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.app;
 
+import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
+import edu.nicholaidudakiwwarrick.advancedjava.services.ServiceType;
+import edu.nicholaidudakiwwarrick.advancedjava.services.StockService;
+import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceException;
+import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceFactory;
+import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 
