@@ -1,5 +1,6 @@
 package edu.nicholaidudakiwwarrick.advancedjava;
 
+import edu.nicholaidudakiwwarrick.advancedjava.app.StockQuoteApplication;
 import org.junit.Before;
 import org.junit.Test;
 

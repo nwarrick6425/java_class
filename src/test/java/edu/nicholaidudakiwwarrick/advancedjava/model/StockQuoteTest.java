@@ -1,5 +1,6 @@
 package edu.nicholaidudakiwwarrick.advancedjava;
 
+import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
 import org.joda.time.DateTime;
 
 import org.junit.Before;

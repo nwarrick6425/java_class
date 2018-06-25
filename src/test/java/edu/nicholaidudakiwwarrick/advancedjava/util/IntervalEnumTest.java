@@ -1,9 +1,8 @@
 package edu.nicholaidudakiwwarrick.advancedjava;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import edu.nicholaidudakiwwarrick.advancedjava.IntervalEnum;
+import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
 
 import static org.junit.Assert.assertEquals;
 
