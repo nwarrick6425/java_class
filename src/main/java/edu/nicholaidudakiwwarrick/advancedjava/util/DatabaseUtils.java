@@ -1,6 +1,8 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.util;
 
 import com.ibatis.common.jdbc.ScriptRunner;
+import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseConnectionException;
+import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseInitializationException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class DatabaseUtils {
     private static final String USER = "monty";
     private static final String PASS = "some_pass";
 
-    public static Connection getConnection() throws DatabaseConnectionException{
+    public static Connection getConnection() throws DatabaseConnectionException {
         Connection connection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");

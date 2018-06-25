@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.util;
 
 /**
  * This class is used to signal a problem initializing to a database.
