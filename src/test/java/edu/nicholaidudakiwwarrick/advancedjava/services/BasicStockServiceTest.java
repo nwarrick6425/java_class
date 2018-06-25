@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
 import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
 import edu.nicholaidudakiwwarrick.advancedjava.services.ServiceType;

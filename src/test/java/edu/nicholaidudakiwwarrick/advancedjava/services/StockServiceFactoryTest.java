@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
 import edu.nicholaidudakiwwarrick.advancedjava.services.ServiceType;
 import edu.nicholaidudakiwwarrick.advancedjava.services.StockService;

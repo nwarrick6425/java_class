@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.app;
 
 import edu.nicholaidudakiwwarrick.advancedjava.app.StockQuoteApplication;
 import org.junit.Before;
