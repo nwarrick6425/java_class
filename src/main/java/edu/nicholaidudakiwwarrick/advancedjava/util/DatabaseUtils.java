@@ -26,11 +26,14 @@ public class DatabaseUtils {
     private static final String USER = "monty";
     private static final String PASS = "some_pass";
 
+    // database script file
+    public static final String initializationFile = "src/main/resources/sql/stocks_db_initialization.sql";
+
     public static Connection getConnection() throws DatabaseConnectionException {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection =   DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBC_DRIVER);
+            connection =  DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (ClassNotFoundException  | SQLException e)  {
             throw new  DatabaseConnectionException("Could not connection to database." + e.getMessage(), e);
         }
