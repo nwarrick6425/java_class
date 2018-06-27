@@ -85,9 +85,10 @@ public class StockQuoteApplication {
         System.out.println("Database Stock Service Quotes");
         System.out.println("*********************************************");
 
+        StockService stockService_two = null;
         // create a StockService instance using the StockServiceFactory static factory method
         try {
-            stockService = StockServiceFactory.getInstance(ServiceType.DATABASE);
+            stockService_two = StockServiceFactory.getInstance(ServiceType.DATABASE);
         } catch (StockServiceException e) {
             e.getMessage();
         }
@@ -95,7 +96,19 @@ public class StockQuoteApplication {
         try {
             // Print a single stock quote to the console from the database
             System.out.println("Print a single stock quote");
-            System.out.println(stockService.getQuote(args[0], startDate).toString());
+            System.out.println(stockService_two.getQuote(args[0], startDate).toString());
+        } catch (StockServiceException e) {
+            e.getMessage();
+        }
+
+        try {
+            // Print multiple stock quotes that fall between both date ranges
+            System.out.println("Print multiple stock quotes for the given date range");
+            List<StockQuote> stockList_two = stockService_two.getQuote(args[0], startDate, endDate);
+
+            for (StockQuote quote : stockList_two) {
+                System.out.println(quote.toString());
+            }
         } catch (StockServiceException e) {
             e.getMessage();
         }
