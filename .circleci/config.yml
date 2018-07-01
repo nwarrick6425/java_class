@@ -29,10 +29,6 @@ jobs:
       - checkout
       
       - run: sudo apt install -y mysql-client
-      - run: mysql create database stocks;
-      - run: mysql use stocks;
-      - run: CREATE USER 'monty'@'localhost' IDENTIFIED BY 'some_pass';
-      - run: GRANT ALL PRIVILEGES ON stocks.* TO 'monty'@'localhost' WITH GRANT OPTION;
 
       # Download and cache dependencies
       - restore_cache:
