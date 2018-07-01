@@ -1,25 +1,21 @@
 package edu.nicholaidudakiwwarrick.advancedjava.services;
 
-import edu.nicholaidudakiwwarrick.advancedjava.services.ServiceType;
-import edu.nicholaidudakiwwarrick.advancedjava.services.StockService;
-import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceException;
-import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 
 /**
- * JUnit to test the <code>StockServiceFactory</code> class
+ * JUnit to test the <code>ServiceFactory</code> class
  */
-public class StockServiceFactoryTest {
+public class ServiceFactoryTest {
 
     private StockService stockService;
 
     @Before
     public void setup() {
         try {
-            stockService = StockServiceFactory.getInstance(ServiceType.BASIC);
+            stockService = ServiceFactory.getStockServiceInstance(ServiceType.BASIC);
         } catch(StockServiceException e) {
             e.getMessage();
         }

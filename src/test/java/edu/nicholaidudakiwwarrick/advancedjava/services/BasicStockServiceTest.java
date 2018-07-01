@@ -1,10 +1,6 @@
 package edu.nicholaidudakiwwarrick.advancedjava.services;
 
 import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
-import edu.nicholaidudakiwwarrick.advancedjava.services.ServiceType;
-import edu.nicholaidudakiwwarrick.advancedjava.services.StockService;
-import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceException;
-import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceFactory;
 import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
 import org.joda.time.DateTime;
 
@@ -36,7 +32,7 @@ public class BasicStockServiceTest {
         startDate = new DateTime().now();
         endDate = startDate.plusDays(5);
         try {
-            basicStockService = StockServiceFactory.getInstance(ServiceType.BASIC);
+            basicStockService = ServiceFactory.getStockServiceInstance(ServiceType.BASIC);
         } catch (StockServiceException e) {
             e.getMessage();
         }

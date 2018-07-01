@@ -45,13 +45,13 @@ public class StockQuoteTest {
         StockQuote stockQuote_two = new StockQuote(symbol, price, date);
         StockQuote stockQuote_three = stockQuote_two;
 
-        assertTrue("The StockQuote instance is equal to itself - Reflexivity",
+        assertTrue("The StockQuote instance does not equal itself - Reflexivity",
                 stockQuote_one.equals(stockQuote_one));
-        assertTrue("The two StockQuote instances are equal - Symmetric",
+        assertTrue("The two StockQuote instances are not equal - Symmetric",
                 stockQuote_one.equals(stockQuote_two) && stockQuote_two.equals(stockQuote_one));
-        assertTrue("The StockQuote instance are equal - Transitivity",
+        assertTrue("The StockQuote instance are not equal - Transitivity",
                 stockQuote_one.equals(stockQuote_three));
-        assertTrue("The hash codes are equal", stockQuote_one.hashCode() == stockQuote_two.hashCode());
+        assertTrue("The hash codes are not equal", stockQuote_one.hashCode() == stockQuote_two.hashCode());
     }
 
     @Test
@@ -59,10 +59,10 @@ public class StockQuoteTest {
         StockQuote stockQuote_one = new StockQuote(symbol, price, date);
         StockQuote stockQuote_two = new StockQuote("AAPL", price, date);
 
-        assertFalse("The two StockQuote instances are not equal", stockQuote_one.equals(stockQuote_two));
-        assertFalse("The passed object is not an instance of StockQuote",
+        assertFalse("The two StockQuote instances are equal", stockQuote_one.equals(stockQuote_two));
+        assertFalse("The passed object is an instance of StockQuote",
                 stockQuote_one.equals(new BigDecimal(100)));
-        assertFalse("The hash codes are not equal",
+        assertFalse("The hash codes are equal",
                 stockQuote_one.hashCode() == stockQuote_two.hashCode());
     }
 }
