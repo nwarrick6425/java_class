@@ -25,7 +25,6 @@ jobs:
       - checkout
       
       - run: sudo apt install -y mysql-client
-      - run: mysql -h 127.0.0.1 -u root
       - run: mysql create database stocks;
       - run: mysql use stocks;
       - run: CREATE USER 'monty'@'localhost' IDENTIFIED BY 'some_pass';
