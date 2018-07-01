@@ -18,6 +18,7 @@ jobs:
             - MYSQL_ROOT_PASSWORD: some_pass
             - MYSQL_DATABASE: stocks
             - MYSQL_USER: monty
+            - MYSQL_PASSWORD: some_pass
 
     working_directory: ~/repo
 
