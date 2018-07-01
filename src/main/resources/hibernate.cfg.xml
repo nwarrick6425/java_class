@@ -10,16 +10,17 @@
         <!-- the root of their class path with appropriate production values. -->
 
         <!-- Tug database connection URL and credentials -->
-        <property name="connection.url">jdbc:mysql://localhost:3306/activities</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/stocks</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <property name="hibernate.connection.username">monty</property>
         <property name="hibernate.connection.password">some_pass</property>
 
-        <mapping class="com.origamisoftware.teach.advanced.model.Hobby"/>
-        <mapping class="com.origamisoftware.teach.advanced.model.Person"/>
-        <mapping class="com.origamisoftware.teach.advanced.model.PersonHobby"/>
+        <mapping class="edu.nicholaidudakiwwarrick.advancedjava.model.DatabaseStockQuote"/>
+        <mapping class="edu.nicholaidudakiwwarrick.advancedjava.model.DatabaseStockSymbol"/>
+        <mapping class="edu.nicholaidudakiwwarrick.advancedjava.model.DatabasePerson"/>
+        <mapping class="edu.nicholaidudakiwwarrick.advancedjava.model.DatabasePersonStock"/>
 
 
     </session-factory>
