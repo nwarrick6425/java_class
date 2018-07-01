@@ -82,9 +82,9 @@ public final class StockQuote {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + symbol.hashCode();
-        result = 31 * result + price.hashCode();
-        result = 31 * result + date.hashCode();
+        result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 

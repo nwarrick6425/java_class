@@ -1,8 +1,11 @@
 package edu.nicholaidudakiwwarrick.advancedjava.util;
 
 import com.ibatis.common.jdbc.ScriptRunner;
-import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseConnectionException;
-import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseInitializationException;
+import edu.nicholaidudakiwwarrick.advancedjava.services.DatabasePersonService;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,6 +17,8 @@ import java.sql.SQLException;
 
 /**
  * A class that contains database related utility methods.
+ *
+ * @author Nicholai Dudakiw-Warrick
  */
 public class DatabaseUtils {
 
@@ -29,11 +34,51 @@ public class DatabaseUtils {
     // database script file
     public static final String initializationFile = "src/main/resources/sql/stocks_db_initialization.sql";
 
+    private static SessionFactory sessionFactory;
+    private static Configuration configuration;
+
+    /**
+     * @return SessionFactory for use with database transactions
+     */
+    public static SessionFactory getSessionFactory() {
+        // singleton pattern
+        synchronized (DatabasePersonService.class) {
+            if (sessionFactory == null) {
+                // applies configuration to service registry which instantiates session factory
+                Configuration configuration = getConfiguration();
+                ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
+                        .applySettings(configuration.getProperties())
+                        .buildServiceRegistry();
+                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            }
+        }
+        return sessionFactory;
+    }
+
+    /**
+     * Create a new or return an existing database configuration object
+     * @return a Hibernate Configuration instance
+     */
+    private static Configuration getConfiguration() {
+        // applies configuration from xml file
+        synchronized (DatabaseUtils.class) {
+            if (configuration == null) {
+                configuration = new Configuration();
+                configuration.configure("hibernate.cfg.xml");
+            }
+        }
+        return configuration;
+    }
+
     public static Connection getConnection() throws DatabaseConnectionException {
         Connection connection = null;
+        Configuration configuration = getConfiguration();
         try {
-            Class.forName(JDBC_DRIVER);
-            connection =  DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName("com.mysql.jdbc.Driver");
+            String databaseUrl = configuration.getProperty("connection.url");
+            String username = configuration.getProperty("hibernate.connection.username");
+            String password = configuration.getProperty("hibernate.connection.password");
+            connection = DriverManager.getConnection(databaseUrl, username, password);
         } catch (ClassNotFoundException  | SQLException e)  {
             throw new  DatabaseConnectionException("Could not connection to database." + e.getMessage(), e);
         }
@@ -50,6 +95,7 @@ public class DatabaseUtils {
         Connection connection = null;
         try {
             connection = getConnection();
+            connection.setAutoCommit(false);
             ScriptRunner runner = new ScriptRunner(connection, false, false);
             InputStream inputStream = new FileInputStream(initializationScript);
 

@@ -8,20 +8,20 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  * @author Nicholai Dudakiw-Warrick
  */
 @Immutable
-public final class StockServiceFactory {
+public final class ServiceFactory {
 
     /**
      * Private constructor to prevent instantiation of static factory instances
      */
-    private StockServiceFactory() {
+    private ServiceFactory() {
     }
 
     /**
      * @param type {@code ServiceType} enum that specifies the type of {@code StockService} to return
-     * @return the {@code BasicStockService} instance as a reference to
+     * @return the {@code BasicStockService} or {@code DatabaseStockService} instance as a reference to
      * the {@code StockService} interface
      */
-    public static final StockService getInstance(ServiceType type) throws StockServiceException {
+    public static final StockService getStockServiceInstance(ServiceType type) throws StockServiceException {
         if (type.equals(ServiceType.BASIC)) {
             return new BasicStockService();
         } else if (type.equals(ServiceType.DATABASE)) {
@@ -30,5 +30,12 @@ public final class StockServiceFactory {
             throw new StockServiceException("Error: Invalid ServiceType");
         }
 
+    }
+
+    /**
+     * @return a {@code DatabasePersonService} instance as a reference to a {@code PersonService} interface
+     */
+    public static final PersonService getPersonServiceInstance() {
+        return new DatabasePersonService();
     }
 }

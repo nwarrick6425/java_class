@@ -21,7 +21,7 @@ public final class BasicStockService implements StockService {
 
     /**
      * Constructor - prevents instantiation of object
-     *               object creation is delegated to static {@code StockServiceFactory}
+     *               object creation is delegated to static {@code ServiceFactory}
      */
     protected BasicStockService() {
     }

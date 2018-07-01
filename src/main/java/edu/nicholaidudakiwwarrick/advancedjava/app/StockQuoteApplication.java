@@ -1,10 +1,10 @@
 package edu.nicholaidudakiwwarrick.advancedjava.app;
 
 import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
+import edu.nicholaidudakiwwarrick.advancedjava.services.ServiceFactory;
 import edu.nicholaidudakiwwarrick.advancedjava.services.ServiceType;
 import edu.nicholaidudakiwwarrick.advancedjava.services.StockService;
 import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceException;
-import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceFactory;
 import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -24,9 +24,9 @@ public class StockQuoteApplication {
 
         StockService stockService = null;
 
-        // create a StockService instance using the StockServiceFactory static factory method
+        // create a StockService instance using the ServiceFactory static factory method
         try {
-            stockService = StockServiceFactory.getInstance(ServiceType.BASIC);
+            stockService = ServiceFactory.getStockServiceInstance(ServiceType.BASIC);
         } catch (StockServiceException e) {
             e.getMessage();
         }
@@ -86,9 +86,9 @@ public class StockQuoteApplication {
         System.out.println("*********************************************");
 
         StockService stockService_two = null;
-        // create a StockService instance using the StockServiceFactory static factory method
+        // create a StockService instance using the ServiceFactory static factory method
         try {
-            stockService_two = StockServiceFactory.getInstance(ServiceType.DATABASE);
+            stockService_two = ServiceFactory.getStockServiceInstance(ServiceType.DATABASE);
         } catch (StockServiceException e) {
             e.getMessage();
         }
