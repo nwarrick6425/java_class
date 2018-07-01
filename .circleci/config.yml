@@ -13,7 +13,9 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/postgres:9.4
-      - image: circleci/mysql:latest
+        environment:
+            TEST_BASE_URL: mysql://monty@localhost/stocks
+      - image: circleci/mysql:latest-ram
 
     working_directory: ~/repo
 
@@ -23,6 +25,8 @@ jobs:
     
     steps:
       - checkout
+      
+      - run: sudo apt-get install mysql-server
 
       # Download and cache dependencies
       - restore_cache:
