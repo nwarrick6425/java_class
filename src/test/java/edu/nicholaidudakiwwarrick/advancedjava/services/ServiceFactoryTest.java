@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,15 +6,19 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 
 /**
- * JUnit to test the <code>StockServiceFactory</code> class
+ * JUnit to test the <code>ServiceFactory</code> class
  */
-public class StockServiceFactoryTest {
+public class ServiceFactoryTest {
 
     private StockService stockService;
 
     @Before
     public void setup() {
-        stockService = StockServiceFactory.newInstance();
+        try {
+            stockService = ServiceFactory.getStockServiceInstance(ServiceType.BASIC);
+        } catch(StockServiceException e) {
+            e.getMessage();
+        }
     }
 
     @Test

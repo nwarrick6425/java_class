@@ -1,5 +1,7 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
+import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
+import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
@@ -19,7 +21,7 @@ public final class BasicStockService implements StockService {
 
     /**
      * Constructor - prevents instantiation of object
-     *               object creation is delegated to static {@code StockServiceFactory}
+     *               object creation is delegated to static {@code ServiceFactory}
      */
     protected BasicStockService() {
     }
@@ -29,10 +31,12 @@ public final class BasicStockService implements StockService {
      *
      * @param symbol the stock symbol of the company you want a quote for.
      *               e.g. APPL for APPLE
+     * @param date   the date for the specific stock quote for the given symbol
      * @return the new stock quote
      */
+    @Override
     public final StockQuote getQuote(String symbol, DateTime date) {
-        return new StockQuote(symbol, new BigDecimal(100), date);
+        return new StockQuote(symbol, new BigDecimal(100), new DateTime(date));
     }
 
     /**
@@ -43,6 +47,7 @@ public final class BasicStockService implements StockService {
      * @param endDate the date of the last stock quote
      * @return a List containing the <code>StockQuote</code> instances for each day of the interval
      */
+    @Override
     public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate) {
         DateTime date = new DateTime(startDate);
         List<StockQuote> result = new ArrayList<StockQuote>();
@@ -68,6 +73,7 @@ public final class BasicStockService implements StockService {
      *                 day will be returned
      * @return a List containing the <code>StockQuote</code> instances for each day of the interval
      */
+    @Override
     public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) {
         DateTime date = new DateTime(startDate);
         List<StockQuote> result = new ArrayList<StockQuote>();

@@ -1,5 +1,7 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
+import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
+import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
 import org.joda.time.DateTime;
 
 import org.junit.Before;
@@ -29,25 +31,29 @@ public class BasicStockServiceTest {
         startPrice = new BigDecimal(100);
         startDate = new DateTime().now();
         endDate = startDate.plusDays(5);
-        basicStockService = StockServiceFactory.newInstance();
+        try {
+            basicStockService = ServiceFactory.getStockServiceInstance(ServiceType.BASIC);
+        } catch (StockServiceException e) {
+            e.getMessage();
+        }
     }
 
     @Test
-    public void testGetQuote() {
+    public void testGetQuote() throws StockServiceException {
         StockQuote stockQuote = basicStockService.getQuote(startSymbol, startDate);
         assertEquals("The StockQuote symbol created by getQuote is correct", startSymbol, stockQuote.getSymbol());
         assertEquals("The StockQuote price created by getQuote is correct", startPrice, stockQuote.getPrice());
     }
 
     @Test
-    public void testGetQuoteListNumberOfDaysPositive() {
+    public void testGetQuoteListNumberOfDaysPositive() throws StockServiceException {
         List<StockQuote> stockList = basicStockService.getQuote(startSymbol, startDate, endDate);
 
         assertTrue("The number of days is 5", stockList.size() == 5);
     }
 
     @Test
-    public void testGetQuoteListNumberOfDaysNegative() {
+    public void testGetQuoteListNumberOfDaysNegative() throws StockServiceException {
         List<StockQuote> stockList = basicStockService.getQuote(startSymbol, startDate, endDate);
 
         assertFalse("The number of days is not greater than or less than 5",
