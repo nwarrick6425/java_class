@@ -1,19 +1,26 @@
 package edu.nicholaidudakiwwarrick.advancedjava.util;
 
 import com.ibatis.common.jdbc.ScriptRunner;
-import edu.nicholaidudakiwwarrick.advancedjava.services.DatabasePersonService;
+import edu.nicholaidudakiwwarrick.advancedjava.model.DatabaseStockSymbol;
+import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
+import edu.nicholaidudakiwwarrick.advancedjava.model.XMLStockQuote;
+import edu.nicholaidudakiwwarrick.advancedjava.model.XMLStockQuoteList;
+import edu.nicholaidudakiwwarrick.advancedjava.services.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+import org.joda.time.DateTime;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * A class that contains database related utility methods.
@@ -110,7 +117,23 @@ public class DatabaseUtils {
             throw new DatabaseInitializationException("Could not initialize db because of:"
                     + e.getMessage(),e);
         }
+    }
 
-
+    /**
+     * Retrieves XML data in the form of XML domain objects, which are converted to database access objects
+     * and stored in the database configuration defined in the hibernate xml file
+     * @param xmlData a String containing a reference to the file containing the XML data to be persisted to the database
+     */
+    public static final void persistXMLData(String xmlData) throws InvalidXMLException, StockServiceException {
+        XMLStockQuoteList quoteList = null;
+        quoteList = XMLUtils.unmarshall(xmlData, XMLStockQuoteList.class);
+        List<XMLStockQuote> xmlQuotes = quoteList.getStock();
+        DatabaseStockService service = (DatabaseStockService) ServiceFactory.getStockServiceInstance(ServiceType.DATABASE);
+        for (XMLStockQuote quote : xmlQuotes) {
+            service.addOrUpdateQuote(DateTime.parse(quote.getTime(),
+                    StockQuote.getDateFormatter()),
+                    new BigDecimal(quote.getPrice()),
+                    new DatabaseStockSymbol(quote.getSymbol()));
+        }
     }
 }

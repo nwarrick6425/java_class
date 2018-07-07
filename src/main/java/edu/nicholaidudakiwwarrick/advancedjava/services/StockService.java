@@ -37,5 +37,5 @@ public interface StockService {
      *                 day will be returned
      * @return a list of StockQuote instances. One for each day in the range specified.
     */
-    List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval);
+    List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) throws StockServiceException;
 }

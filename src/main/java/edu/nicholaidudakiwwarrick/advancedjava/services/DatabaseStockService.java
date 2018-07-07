@@ -1,9 +1,14 @@
 package edu.nicholaidudakiwwarrick.advancedjava.services;
 
+import edu.nicholaidudakiwwarrick.advancedjava.model.DatabaseStockQuote;
+import edu.nicholaidudakiwwarrick.advancedjava.model.DatabaseStockSymbol;
 import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
 import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseConnectionException;
 import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseUtils;
 import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
@@ -111,7 +116,65 @@ public class DatabaseStockService implements StockService {
     }
 
     @Override
-    public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) {
-        return null;
+    public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) throws StockServiceException {
+        List<StockQuote> stockQuotes = null;
+        try {
+            Connection connection = DatabaseUtils.getConnection();
+            Statement statement = connection.createStatement();
+            String queryString = "select id from stock_symbols where symbol = '" + symbol + "'";
+            ResultSet resultSet = statement.executeQuery(queryString);
+            resultSet.next();
+            queryString = "select * from quotes where symbol_id = '" + resultSet.getInt("id") +
+                    "' and time between '" + startDate.toString(StockQuote.DATE_PATTERN) + "' and '" +
+                    endDate.toString(StockQuote.DATE_PATTERN) + "'";
+            resultSet = statement.executeQuery(queryString);
+            stockQuotes = new ArrayList<StockQuote>(resultSet.getFetchSize());
+            DateTime intervalEnd = new DateTime(startDate);
+            while (resultSet.next()) {
+                BigDecimal price = resultSet.getBigDecimal("price");
+                Timestamp timestamp = resultSet.getTimestamp("time");
+                DateTime time = new DateTime(timestamp);
+                if (!time.isBefore(intervalEnd)) {
+                    stockQuotes.add(new StockQuote(symbol, price, time));
+                    intervalEnd.plusHours(interval.amount());
+                }
+            }
+        } catch (DatabaseConnectionException | SQLException e) {
+            throw new StockServiceException(e.getMessage(), e);
+        }
+        if (stockQuotes.isEmpty()) {
+            throw new StockServiceException("No instances of " + symbol + " found in the selected range");
+        }
+        return stockQuotes;
+    }
+
+    /**
+     * Adds a new quote or update an existing one in the database
+     * @param time the {@code DateTime} representation of the quote
+     * @param price the price of the quote
+     * @param stockSymbol the symbol of the quote
+     * @throws StockServiceException if a service cannot perform a certain operation
+     */
+    public final void addOrUpdateQuote(DateTime time, BigDecimal price, DatabaseStockSymbol stockSymbol) throws StockServiceException {
+        Session session =  DatabaseUtils.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            // updates instance of StockQuote if already exists within table
+            // or adds as last row of personStock table
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(stockSymbol);
+            DatabaseStockQuote dbQuote = new DatabaseStockQuote(time, price, stockSymbol);
+            session.saveOrUpdate(dbQuote);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();  // close transaction
+                throw new RuntimeException(e.getMessage());
+            }
+        } finally {
+            if (transaction != null && transaction.isActive()) {
+                transaction.commit();
+            }
+        }
     }
 }
