@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.util;
 
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
