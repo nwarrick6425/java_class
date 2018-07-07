@@ -59,29 +59,32 @@ public class StockQuoteApplication {
         }
         // Print multiple stock quotes between the period at the given interval
         System.out.println("Print multiple stock quotes for the given date range at the given interval");
-        if(args[3].toUpperCase().equals("HOURLY")) {
-            List<StockQuote> intervalStockList =
-                    stockService.getQuote(args[0], startDate, endDate, IntervalEnum.HOURLY);
+        try {
+            if (args[3].toUpperCase().equals("HOURLY")) {
+                List<StockQuote> intervalStockList =
+                        stockService.getQuote(args[0], startDate, endDate, IntervalEnum.HOURLY);
 
-            for (StockQuote quote : intervalStockList) {
-                System.out.println(quote.toString());
-            }
-        } else if(args[3].toUpperCase().equals("HALF_DAY")) {
-            List<StockQuote> intervalStockList =
-                    stockService.getQuote(args[0], startDate, endDate, IntervalEnum.HALF_DAY);
+                for (StockQuote quote : intervalStockList) {
+                    System.out.println(quote.toString());
+                }
+            } else if (args[3].toUpperCase().equals("HALF_DAY")) {
+                List<StockQuote> intervalStockList =
+                        stockService.getQuote(args[0], startDate, endDate, IntervalEnum.HALF_DAY);
 
-            for (StockQuote quote : intervalStockList) {
-                System.out.println(quote.toString());
-            }
-        } else if(args[3].toUpperCase().equals("DAILY")) {
-            List<StockQuote> intervalStockList =
-                    stockService.getQuote(args[0], startDate, endDate, IntervalEnum.DAILY);
+                for (StockQuote quote : intervalStockList) {
+                    System.out.println(quote.toString());
+                }
+            } else if (args[3].toUpperCase().equals("DAILY")) {
+                List<StockQuote> intervalStockList =
+                        stockService.getQuote(args[0], startDate, endDate, IntervalEnum.DAILY);
 
-            for (StockQuote quote : intervalStockList) {
-                System.out.println(quote.toString());
+                for (StockQuote quote : intervalStockList) {
+                    System.out.println(quote.toString());
+                }
             }
+        } catch (StockServiceException e) {
+            System.out.println(e.getMessage());
         }
-
         System.out.println("Database Stock Service Quotes");
         System.out.println("*********************************************");
 

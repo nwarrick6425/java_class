@@ -61,13 +61,13 @@ public class BasicStockServiceTest {
     }
 
     @Test
-    public void testGetQuoteIntervalPositive() {
+    public void testGetQuoteIntervalPositive() throws StockServiceException {
         List<StockQuote> stockList = basicStockService.getQuote(startSymbol, startDate, endDate, IntervalEnum.HOURLY);
         assertTrue("The number of stock quotes generated is 120 for 5 days", stockList.size() == 120);
     }
 
     @Test
-    public void testGetQuoteIntervalNegative() {
+    public void testGetQuoteIntervalNegative() throws StockServiceException {
         List<StockQuote> stockList = basicStockService.getQuote(startSymbol, startDate, endDate, IntervalEnum.HOURLY);
         assertFalse("The number of stock quotes generated is not greater than or less than 120 for 5 days",
                 stockList.size() < 120 || stockList.size() > 120);

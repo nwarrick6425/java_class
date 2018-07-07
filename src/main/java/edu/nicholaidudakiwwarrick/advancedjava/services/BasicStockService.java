@@ -72,9 +72,10 @@ public final class BasicStockService implements StockService {
      *                 e.g. if IntervalEnum.DAILY is specified, one StockQuote per
      *                 day will be returned
      * @return a List containing the <code>StockQuote</code> instances for each day of the interval
+     * @throws StockServiceException
      */
     @Override
-    public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) {
+    public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) throws StockServiceException {
         DateTime date = new DateTime(startDate);
         List<StockQuote> result = new ArrayList<StockQuote>();
         BigDecimal startPrice = new BigDecimal(100);
