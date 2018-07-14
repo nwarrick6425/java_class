@@ -22,7 +22,6 @@ public class DatabaseStockServiceTest {
 
     @Before
     public final void setup() throws DatabaseInitializationException, StockServiceException {
-        DatabaseUtils.initializeDatabase(DatabaseUtils.initializationFile);
         databaseStockService = (DatabaseStockService) StockServiceFactory.getInstance(ServiceType.DATABASE);
         startDate = new DateTime(2015, 2, 3, 0, 0);
         endDate = DateTime.now();

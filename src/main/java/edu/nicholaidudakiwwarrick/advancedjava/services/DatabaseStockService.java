@@ -18,7 +18,7 @@ import java.util.List;
 public class DatabaseStockService implements StockService {
 
     /**
-     * prevents instantiation - object creation delegated to StockServiceFactory
+     * prevents instantiation - object creation delegated to ServiceFactory
      */
     protected DatabaseStockService() {
 
@@ -38,23 +38,27 @@ public class DatabaseStockService implements StockService {
     @Override
     public final StockQuote getQuote(String symbol, DateTime date) throws StockServiceException {
         List<StockQuote> stockQuotes = null;
+
+        // set the start and end of the passed day
         DateTime dayStart = date.withTimeAtStartOfDay();
         DateTime dayEnd = dayStart.plusSeconds(86399);
+
         try {
             Connection connection = DatabaseUtils.getConnection();
             Statement statement = connection.createStatement();
-            String queryString = "select * from quotes where symbol = '" + symbol + "'" +
+            String queryString = "select id from stock_symbols where symbol = '" + symbol + "'";
+            ResultSet resultSet = statement.executeQuery(queryString);
+            resultSet.next();
+            queryString = "select * from quotes where symbol_id = '" + resultSet.getInt("id") + "'"+
                     "AND time between '" + dayStart.toString(StockQuote.DATE_PATTERN) + "' and '" +
                     dayEnd.toString(StockQuote.DATE_PATTERN) + "'";
-
-            ResultSet resultSet = statement.executeQuery(queryString);
+            resultSet = statement.executeQuery(queryString);
             stockQuotes = new ArrayList<>(resultSet.getFetchSize());
             while(resultSet.next()) {
-                String symbolValue = resultSet.getString("symbol");
                 Timestamp timeStamp = resultSet.getTimestamp("time");
                 DateTime time = new DateTime(timeStamp);
                 BigDecimal price = resultSet.getBigDecimal("price");
-                stockQuotes.add(new StockQuote(symbolValue, price, time));
+                stockQuotes.add(new StockQuote(symbol, price, time));
             }
         } catch (DatabaseConnectionException | SQLException exception) {
             throw new StockServiceException(exception.getMessage(), exception);
@@ -82,17 +86,20 @@ public class DatabaseStockService implements StockService {
         try {
             Connection connection = DatabaseUtils.getConnection();
             Statement statement = connection.createStatement();
-            String queryString = "select * from quotes where symbol = '" + symbol + "'" +
+            String queryString = "select id from stock_symbols where symbol = '" + symbol + "'";
+            ResultSet resultSet = statement.executeQuery(queryString);
+            resultSet.next();
+            queryString = "select * from quotes where symbol_id = '" + resultSet.getInt("id") + "'" +
                     "AND time between '" + startDate.toString(StockQuote.DATE_PATTERN) + "' and '" +
                     endDate.toString(StockQuote.DATE_PATTERN) + "'";
 
-            ResultSet resultSet = statement.executeQuery(queryString);
+            resultSet = statement.executeQuery(queryString);
             stockQuotes = new ArrayList<>(resultSet.getFetchSize());
             while(resultSet.next()) {
-                String symbolValue = resultSet.getString("symbol");
-                DateTime time = new DateTime(resultSet.getDate("time"));
+                Timestamp timeStamp = resultSet.getTimestamp("time");
+                DateTime time = new DateTime(timeStamp);
                 BigDecimal price = resultSet.getBigDecimal("price");
-                stockQuotes.add(new StockQuote(symbolValue, price, time));
+                stockQuotes.add(new StockQuote(symbol, price, time));
             }
         } catch (DatabaseConnectionException | SQLException exception) {
             throw new StockServiceException(exception.getMessage(), exception);
@@ -105,6 +112,6 @@ public class DatabaseStockService implements StockService {
 
     @Override
     public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) {
-        return new ArrayList<StockQuote>();
+        return null;
     }
 }
