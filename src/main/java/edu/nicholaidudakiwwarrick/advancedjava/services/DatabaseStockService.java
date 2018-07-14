@@ -105,6 +105,6 @@ public class DatabaseStockService implements StockService {
 
     @Override
     public final List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) {
-        return null;
+        return new ArrayList<StockQuote>();
     }
 }
