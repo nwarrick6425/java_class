@@ -1,4 +1,4 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.model;
 
 import jdk.nashorn.internal.ir.annotations.Immutable;
 import javax.validation.constraints.NotNull;
