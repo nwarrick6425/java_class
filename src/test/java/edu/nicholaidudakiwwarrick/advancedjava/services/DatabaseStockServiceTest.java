@@ -1,5 +1,7 @@
 package edu.nicholaidudakiwwarrick.advancedjava.services;
 
+import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseInitializationException;
+import edu.nicholaidudakiwwarrick.advancedjava.util.DatabaseUtils;
 import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
 import org.joda.time.DateTime;
 
@@ -19,19 +21,19 @@ public class DatabaseStockServiceTest {
     private static final int NUMBER_OF_DAYS = 100;
 
     @Before
-    public final void setup() throws StockServiceException {
-        DatabaseUtils.intializeDatabase(DatabaseUtils.initializationFile);
-        databaseStockService = (DatabaseStockService) StockServiceFactory.getInstance(ServiceType.DATABASE);
+    public final void setup() throws DatabaseInitializationException, StockServiceException {
+        DatabaseUtils.initializeDatabase(DatabaseUtils.initializationFile);
+        databaseStockService = (DatabaseStockService) ServiceFactory.getStockServiceInstance(ServiceType.DATABASE);
         startDate = new DateTime(2015, 2, 3, 0, 0);
         endDate = DateTime.now();
-        knownDate = new DateTime(2004, 8, 19, 0 ,0, 1);
+        knownDate = new DateTime(2016, 6, 9, 17 ,0, 1);
         symbol = "GOOG";
         interval = IntervalEnum.DAILY;
     }
 
     @Test
     public final void testGetQuoteSingleArgPositive() throws StockServiceException {
-        assertTrue("Stock symbol returned from getQuote equals test stock symbol string for known date",
+        assertTrue("Stock symbol returned from getQuote does not equal test stock symbol string for known date",
                 databaseStockService.getQuote(symbol, knownDate).getSymbol().equals(symbol));
     }
 
@@ -42,7 +44,7 @@ public class DatabaseStockServiceTest {
 
     @Test
     public final void testGetQuoteTripleArgPositive() throws StockServiceException {
-        assertTrue("StockQuotes returned equal the passed symbol",
+        assertTrue("StockQuotes returned do not equal the passed symbol",
                 databaseStockService.getQuote(symbol, startDate, endDate).get(0).getSymbol().equals(symbol));
     }
 
