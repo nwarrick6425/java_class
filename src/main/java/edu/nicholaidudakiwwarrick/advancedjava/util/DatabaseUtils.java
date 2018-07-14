@@ -20,7 +20,7 @@ public class DatabaseUtils {
     // in a real program these values would be a configurable property and not hard coded.
     // JDBC driver name and database URL
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/stocks";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/stocks?autoReconnect=true&relaxAutoCommit=true";
 
     //  Database credentials
     private static final String USER = "monty";
