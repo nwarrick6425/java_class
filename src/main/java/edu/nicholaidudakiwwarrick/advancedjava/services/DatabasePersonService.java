@@ -51,9 +51,7 @@ public class DatabasePersonService implements PersonService {
             }
             throw new PersonServiceException("Could not get Person data. " + e.getMessage(), e);
         } finally {
-            if (transaction != null && transaction.isActive()) {
-                transaction.commit();
-            }
+            session.close();
         }
         return persons;
     }
@@ -78,9 +76,7 @@ public class DatabasePersonService implements PersonService {
             }
             throw new PersonServiceException("Could not add/update Person data. " + e.getMessage(), e);
         } finally {
-            if (transaction != null && transaction.isActive()) {
-                transaction.commit();
-            }
+            session.close();
         }
     }
 
@@ -114,9 +110,7 @@ public class DatabasePersonService implements PersonService {
             }
             throw new PersonServiceException("Could not get Stock Symbols for entered Person. " + e.getMessage(), e);
         } finally {
-            if (transaction != null && transaction.isActive()) {
-                transaction.commit();
-            }
+            session.close();
         }
         return stockSymbols;
     }
@@ -147,9 +141,7 @@ public class DatabasePersonService implements PersonService {
             }
             throw new PersonServiceException("Could not add/update Stock Symbols for entered Person. " + e.getMessage(), e);
         } finally {
-            if (transaction != null && transaction.isActive()) {
-                transaction.commit();
-            }
+            session.close();
         }
     }
 }
