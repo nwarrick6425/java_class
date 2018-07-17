@@ -5,4 +5,4 @@ package edu.nicholaidudakiwwarrick.advancedjava.services;
  *
  * @author Nicholai Dudakiw-Warrick
  */
-public enum ServiceType {BASIC, DATABASE}
+public enum ServiceType {BASIC, DATABASE, WEB}
