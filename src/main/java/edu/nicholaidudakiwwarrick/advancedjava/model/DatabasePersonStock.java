@@ -1,6 +1,13 @@
 package edu.nicholaidudakiwwarrick.advancedjava.model;
 
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 /**
  * This class models a database table containing stock info for

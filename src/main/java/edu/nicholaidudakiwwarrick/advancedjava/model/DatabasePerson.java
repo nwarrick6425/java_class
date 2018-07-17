@@ -1,6 +1,12 @@
 package edu.nicholaidudakiwwarrick.advancedjava.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Basic;
+import javax.persistence.GeneratedValue;
+
 /**
  * This class models a database table that represents a person
  * in the {@Code @Table} annotation

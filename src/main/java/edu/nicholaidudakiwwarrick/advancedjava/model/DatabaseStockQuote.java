@@ -2,7 +2,15 @@ package edu.nicholaidudakiwwarrick.advancedjava.model;
 
 import org.joda.time.DateTime;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Basic;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 

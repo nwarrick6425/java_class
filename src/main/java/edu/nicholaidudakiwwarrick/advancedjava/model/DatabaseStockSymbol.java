@@ -1,6 +1,11 @@
 package edu.nicholaidudakiwwarrick.advancedjava.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Basic;
 
 /**
  * This class models a database table containing stock symbol info
