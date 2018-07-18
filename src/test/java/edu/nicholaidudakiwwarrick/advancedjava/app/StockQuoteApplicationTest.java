@@ -1,5 +1,6 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.app;
 
+import edu.nicholaidudakiwwarrick.advancedjava.app.StockQuoteApplication;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +12,14 @@ public class StockQuoteApplicationTest {
 
     @Before
     public void setup() {
-        args = new String[]{"GOOG", "2018-06-08 00:00:00", "2018-06-15 00:00:00", "HALF_DAY"};
+        args = new String[]{"-symbol",
+                "GOOG",
+                "-start",
+                "2016-06-09 00:00:00",
+                "-end",
+                "2016-06-23 00:00:00",
+                "-interval",
+                "DAILY"};
     }
 
 
