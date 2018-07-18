@@ -18,8 +18,8 @@ public final class ServiceFactory {
 
     /**
      * @param type {@code ServiceType} enum that specifies the type of {@code StockService} to return
-     * @return the {@code BasicStockService} or {@code DatabaseStockService} instance as a reference to
-     *              the {@code StockService} interface
+     * @return the {@code BasicStockService}, {@code DatabaseStockService}, or {@code WebStockService}
+     *          instance as a reference to the {@code StockService} interface
      * @throws StockServiceException when an invalid service type is passed - be sure to use the types listed
      *                               in the {@code ServiceType} enumeration
      */
