@@ -72,7 +72,7 @@ public class WebStockServiceTest {
     }
 
     /**
-     * Test that the {@code DateTime} returned is not the same as a future date
+     * Tests that the {@code DateTime} returned is not the same as a future date
      * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
      *                               the {@code StockQuote} is null
      */
@@ -82,6 +82,11 @@ public class WebStockServiceTest {
                 service.getQuote(symbol, end).getDate().getMillis() == (DateTime.now().getMillis() + 2600));
     }
 
+    /**
+     * Tests that the stock symbol retrieved from getQuote is the same as what was passed
+     * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
+     *                               the {@code StockQuote} is null
+     */
     @Test
     public final void testGetQuoteTripleArgStockSymbolPositive() throws StockServiceException {
         List<StockQuote> qList = service.getQuote(symbol, start, end);
@@ -90,6 +95,11 @@ public class WebStockServiceTest {
         }
     }
 
+    /**
+     * Tests that the stock symbol returned is not something other than what was passed
+     * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
+     *                               the {@code StockQuote} is null
+     */
     @Test
     public final void testGetQuoteTripleArgStockSymbolNegative() throws StockServiceException {
         List<StockQuote> qList = service.getQuote(symbol, start, end);
@@ -99,8 +109,13 @@ public class WebStockServiceTest {
         }
     }
 
+    /**
+     * Tests that the {@code DateTime} returned is not after the date passed
+     * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
+     *                               the {@code StockQuote} is null
+     */
     @Test
-    public final void testGetQuoteTripleArgTimePositive() throws StockServiceException {
+    public final void testGetQuoteTripleArgDatePositive() throws StockServiceException {
         List<StockQuote> qList = service.getQuote(symbol, start, end);
         for (StockQuote q : qList) {
             assertTrue("Date returned from getQuote is not within parameter range",
@@ -108,11 +123,73 @@ public class WebStockServiceTest {
         }
     }
 
+    /**
+     * Tests that the {@code DateTime} returned is not the same as a future date
+     * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
+     *                               the {@code StockQuote} is null
+     */
     @Test
-    public final void testGetQuoteTripleArgTimeNegative() throws StockServiceException {
+    public final void testGetQuoteTripleArgDateNegative() throws StockServiceException {
         List<StockQuote> qList = service.getQuote(symbol, start, end);
         for (StockQuote q : qList) {
             assertFalse("Date returned from getQuote is not within parameter range",
+                    q.getDate().isBefore(start) || q.getDate().isAfter(end));
+        }
+    }
+
+    /**
+     * Tests that the stock symbol retrieved from getQuote is the same as what was passed
+     * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
+     *                               the {@code StockQuote} is null
+     */
+    @Test
+    public final void testGetQuoteQuadArgStockSymbolPositive() throws StockServiceException {
+        List<StockQuote> qList = service.getQuote(symbol, start, end, interval);
+        System.out.println(interval.toString());
+        for (StockQuote q : qList) {
+            assertTrue("Symbol returned from getQuote is not same as symbol passed as argument",
+                    q.getSymbol().equals(symbol));
+        }
+    }
+
+    /**
+     * Tests that the stock symbol returned is not something other than what was passed
+     * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
+     *                               the {@code StockQuote} is null
+     */
+    @Test
+    public final void testGetQuoteQuadArgStockSymbolNegative() throws StockServiceException {
+        List<StockQuote> qList = service.getQuote(symbol, start, end, interval);
+        for (StockQuote q : qList) {
+            assertFalse("Symbol returned from getQuote is the same as an invalid symbol",
+                    q.getSymbol().equals(""));
+        }
+    }
+
+    /**
+     * Tests that the {@code DateTime} returned is not after the date passed
+     * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
+     *                               the {@code StockQuote} is null
+     */
+    @Test
+    public final void testGetQuoteQuadArgDatePositive() throws StockServiceException {
+        List<StockQuote> qList = service.getQuote(symbol, start, end, interval);
+        for (StockQuote q : qList) {
+            assertTrue("Time returned from getQuote is not within parameter range",
+                    !q.getDate().isBefore(start) && !q.getDate().isAfter(end));
+        }
+    }
+
+    /**
+     * Tests that the {@code DateTime} returned is not the same as a future date
+     * @throws StockServiceException if there is an IO exception retrieving the {@code StockQuote} or if the
+     *                               the {@code StockQuote} is null
+     */
+    @Test
+    public final void testGetQuoteQuadArgDateNegative() throws StockServiceException {
+        List<StockQuote> qList = service.getQuote(symbol, start, end, interval);
+        for (StockQuote q : qList) {
+            assertFalse("Time returned from getQuote is not within parameter range",
                     q.getDate().isBefore(start) || q.getDate().isAfter(end));
         }
     }
