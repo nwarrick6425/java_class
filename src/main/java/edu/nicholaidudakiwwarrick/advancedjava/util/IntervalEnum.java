@@ -18,7 +18,13 @@ public enum IntervalEnum {
     HALF_DAY("HALF_DAY", 12),
 
     /** An enumeration for one day of one year or 24 hours */
-    DAILY("DAILY", 24);
+    DAILY("DAILY", 24),
+
+    /** An enumeration for a week of one year or 168 hours */
+    WEEKLY("WEEKLY", 168),
+
+    /** An enumeration for a month of one year or 672 hours */
+    MONTHLY("MONTHLY", 672);
 
     private final String symbol;
     private final int hours;
