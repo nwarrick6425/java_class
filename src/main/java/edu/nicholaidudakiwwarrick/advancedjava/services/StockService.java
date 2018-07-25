@@ -1,5 +1,7 @@
-package edu.nicholaidudakiwwarrick.advancedjava;
+package edu.nicholaidudakiwwarrick.advancedjava.services;
 
+import edu.nicholaidudakiwwarrick.advancedjava.util.IntervalEnum;
+import edu.nicholaidudakiwwarrick.advancedjava.model.StockQuote;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public interface StockService {
      * @param date the date of the stock quote needed
      * @return a <CODE>StockQuote</CODE> instance
     */
-    StockQuote getQuote(String symbol, DateTime date);
+    StockQuote getQuote(String symbol, DateTime date) throws StockServiceException;
 
 
     /**
@@ -23,7 +25,7 @@ public interface StockService {
      * @return a list of StockQuote instances. One for each day in the range specified.
      *
     */
-    List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate);
+    List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate) throws StockServiceException;
 
     /**
      * Get a historical list of stock quotes for the provide symbol
@@ -35,5 +37,5 @@ public interface StockService {
      *                 day will be returned
      * @return a list of StockQuote instances. One for each day in the range specified.
     */
-    List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval);
+    List<StockQuote> getQuote(String symbol, DateTime startDate, DateTime endDate, IntervalEnum interval) throws StockServiceException;
 }
