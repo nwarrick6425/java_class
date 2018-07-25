@@ -38,10 +38,12 @@ public class StockQuoteApplication {
      */
     public static void main(@NotNull String[] args) {
 
+        // Create StockQuoteApplication object to pass to the command line parser
         StockQuoteApplication app = new StockQuoteApplication();
         CmdLineParser parser = new CmdLineParser(app);
         parser.setUsageWidth(80);
 
+        // Pass the command line args to the parser
         try {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
@@ -52,129 +54,81 @@ public class StockQuoteApplication {
             System.err.println();
         }
 
-        StockService stockService = null;
-
-        // create a StockService instance using the ServiceFactory static factory method
-        try {
-            stockService = ServiceFactory.getStockServiceInstance(ServiceType.BASIC);
-        } catch (StockServiceException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
-
-        // Retrieve date formatter and parse the 2nd and 3rd date args
+        // Retrieve date formatter and parse the start and end date args
         DateTimeFormatter formatter = StockQuote.getDateFormatter();
         DateTime startDate = DateTime.parse(app.startDate, formatter);
         DateTime endDate = DateTime.parse(app.endDate, formatter);
 
-        System.out.println("Basic Stock Service Quotes");
-        System.out.println("****************************************");
+        // Print stock quotes using all three service types - BASIC, DATABASE, WEB
         try {
-            // Print a single stock quote to the console
-            System.out.println("Print a single stock quote");
-            System.out.println(stockService.getQuote(app.symbol, startDate).toString());
-        } catch (StockServiceException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
+            app.printStockQuotes(app.symbol, startDate, endDate, app.asIntervalEnum(app.interval), ServiceType.BASIC);
 
-        try {
-            // Print multiple stock quotes that fall between both date ranges
-            System.out.println("Print multiple stock quotes for the given date range");
-            List<StockQuote> stockList = stockService.getQuote(app.symbol, startDate, endDate);
+            app.printStockQuotes(app.symbol, startDate, endDate, app.asIntervalEnum(app.interval), ServiceType.DATABASE);
 
-            for (StockQuote quote : stockList) {
-                System.out.println(quote.toString());
-            }
-        } catch (StockServiceException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
-        // Print multiple stock quotes between the period at the given interval
-        System.out.println("Print multiple stock quotes for the given date range at the given interval");
-        try {
-            if (app.interval.toUpperCase().equals("HOURLY")) {
-                List<StockQuote> intervalStockList =
-                        stockService.getQuote(app.symbol, startDate, endDate, IntervalEnum.HOURLY);
-
-                for (StockQuote quote : intervalStockList) {
-                    System.out.println(quote.toString());
-                }
-            } else if (app.interval.toUpperCase().equals("HALF_DAY")) {
-                List<StockQuote> intervalStockList =
-                        stockService.getQuote(app.symbol, startDate, endDate, IntervalEnum.HALF_DAY);
-
-                for (StockQuote quote : intervalStockList) {
-                    System.out.println(quote.toString());
-                }
-            } else if (app.interval.toUpperCase().equals("DAILY")) {
-                List<StockQuote> intervalStockList =
-                        stockService.getQuote(app.symbol, startDate, endDate, IntervalEnum.DAILY);
-
-                for (StockQuote quote : intervalStockList) {
-                    System.out.println(quote.toString());
-                }
-            }
-        } catch (StockServiceException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
-        System.out.println("Database Stock Service Quotes");
-        System.out.println("*********************************************");
-
-        StockService stockService_two = null;
-        // create a StockService instance using the ServiceFactory static factory method
-        try {
-            stockService_two = ServiceFactory.getStockServiceInstance(ServiceType.DATABASE);
-        } catch (StockServiceException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
-
-        try {
-            // Print a single stock quote to the console from the database
-            System.out.println("Print a single stock quote");
-            System.out.println(stockService_two.getQuote(app.symbol, startDate).toString());
-        } catch (StockServiceException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
-
-        try {
-            // Print multiple stock quotes that fall between both date ranges
-            System.out.println("Print multiple stock quotes for the given date range");
-            List<StockQuote> stockList_two = stockService_two.getQuote(app.symbol, startDate, endDate);
-
-            for (StockQuote quote : stockList_two) {
-                System.out.println(quote.toString());
-            }
-        } catch (StockServiceException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
-
-        // Print stock quotes from the Yahoo Finance API
-        StockService stockService_three = null;
-        System.out.println("Print a single stock quote using the Yahoo Finance API");
-        try {
-            stockService_three = ServiceFactory.getStockServiceInstance(ServiceType.WEB);
-            System.out.println(stockService_three.getQuote(app.symbol, startDate).toString());
-        } catch (StockServiceException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
-
-        System.out.println("Print multiple stock quotes from the Yahoo Finance API");
-        try {
-
-            List<StockQuote> stockList_three = stockService_three.getQuote(app.symbol, startDate, endDate);
-            for (StockQuote quote : stockList_three) {
-                System.out.println(quote.toString());
-            }
+            app.printStockQuotes(app.symbol, startDate, endDate, app.asIntervalEnum(app.interval), ServiceType.WEB);
         } catch (StockServiceException e) {
             System.err.println(e.getMessage());
             System.exit(1);
         }
     }
 
+    /**
+     * Prints out {@code StockQuote} objects for all overloaded {@code getQuote} methods
+     * @param symbol the stock symbol to look up
+     * @param start the starting date of the stock look up
+     * @param end the end date of the stock look up
+     * @param interval interval for the stock look up (e.g., DAILY, WEEKLY, MONTHLY)
+     * @param type the service type of the stock look up (e.g., BASIC, DATABASE, WEB)
+     * @throws StockServiceException when the {@code StockService} creation fails or if
+     *                               any of the getQuote methods fail
+     */
+    public final void printStockQuotes(String symbol, DateTime start, DateTime end, IntervalEnum interval, ServiceType type)
+    throws StockServiceException{
+
+        StockService stockService = ServiceFactory.getStockServiceInstance(type);
+
+        System.out.println("Print a single stock quote - " + type.toString() + " stock service");
+        System.out.println("------------------------------------------------------------------");
+        System.out.println(stockService.getQuote(symbol, start).toString());
+
+        System.out.println("Print multiple stock quotes - " + type.toString() + " stock service");
+        System.out.println("-------------------------------------------------------------------");
+        List<StockQuote> quoteList = stockService.getQuote(symbol, start, end);
+        for (StockQuote quote : quoteList){
+            System.out.println(quote.toString());
+        }
+
+        System.out.println("Print multiple stock quotes at a " + interval.toString() + " interval - "
+                + type.toString() + " stock service");
+        System.out.println("-------------------------------------------------------------------");
+        List<StockQuote> intervalQuoteList = stockService.getQuote(symbol, start, end, interval);
+        for (StockQuote quote : intervalQuoteList) {
+            System.out.println(quote.toString());
+        }
+    }
+
+    /**
+     * Returns an {@code IntervalEnum} from a passed {@code String}
+     *
+     * @param interval a string representation of an IntervalEnum
+     * @return an IntervalEnum
+     */
+    public final IntervalEnum asIntervalEnum(String interval) {
+        // Default Interval - returned if no match is found
+        IntervalEnum result = IntervalEnum.MONTHLY;
+
+        if (interval.toUpperCase().equals("HOURLY")) {
+            result = IntervalEnum.HOURLY;
+        } else if (interval.toUpperCase().equals("HALF_DAY")) {
+            result = IntervalEnum.HALF_DAY;
+        } else if (interval.toUpperCase().equals("DAILY")) {
+            result = IntervalEnum.DAILY;
+        } else if (interval.toUpperCase().equals("WEEKLY")) {
+            result = IntervalEnum.WEEKLY;
+        } else if (interval.toUpperCase().equals("MONTHLY")) {
+            result = IntervalEnum.MONTHLY;
+        }
+
+        return result;
+    }
 }
