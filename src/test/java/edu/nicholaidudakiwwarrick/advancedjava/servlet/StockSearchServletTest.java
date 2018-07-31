@@ -47,7 +47,6 @@ public class StockSearchServletTest {
 
     @BeforeClass
     public static void openBrowser() {
-        System.setProperty("webdriver.gecko.driver", "C:\\\\Users\\nwarr\\Downloads\\geckodriver-v0.21.0-win64\\geckodriver.exe");
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
