@@ -82,7 +82,7 @@ public class StockSearch {
     }
 
     public final void setEndDate(String endDate) {
-        this.endDate = DateTime.parse(endDate,StockQuote.getDateFormatter());
+        this.endDate = DateTime.parse(endDate, StockQuote.getDateFormatter());
     }
 
     public final String getInterval() {
