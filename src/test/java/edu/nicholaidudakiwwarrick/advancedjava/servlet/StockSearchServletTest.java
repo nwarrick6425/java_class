@@ -3,8 +3,7 @@ package edu.nicholaidudakiwwarrick.advancedjava.servlet;
 import edu.nicholaidudakiwwarrick.advancedjava.model.StockSearch;
 import edu.nicholaidudakiwwarrick.advancedjava.services.ServiceType;
 import edu.nicholaidudakiwwarrick.advancedjava.services.StockServiceException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.mockito.Mockito;
 
 import javax.servlet.RequestDispatcher;
@@ -15,10 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 /**
  * @author Nicholai Dudakiw-Warrick
@@ -34,6 +41,16 @@ public class StockSearchServletTest {
     private static final String ENDDATE_PARAMETER_KEY = "endDate";
     private static final String INTERVAL_PARAMETER_KEY = "interval";
     private static final String SERVICETYPE_PARAMETER_KEY = "serviceType";
+
+    private static FirefoxDriver driver;
+    WebElement element;
+
+    @BeforeClass
+    public static void openBrowser() {
+        System.setProperty("webdriver.gecko.driver", "C:\\\\Users\\nwarr\\Downloads\\geckodriver-v0.21.0-win64\\geckodriver.exe");
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
 
     /**
      * Sets up the logic common to each test in this class
@@ -68,7 +85,7 @@ public class StockSearchServletTest {
         when(request.getSession()).thenReturn(session);
         final ServletContext servletContext = Mockito.mock(ServletContext.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        when(servletContext.getRequestDispatcher("/stocksearchResults.jsp")).thenReturn(dispatcher);
+        when(servletContext.getRequestDispatcher("/stockquoteResults.jsp")).thenReturn(dispatcher);
         servlet = new StockSearchServlet() {
             public ServletContext getServletContext() {
                 return servletContext; // return the mock
@@ -120,5 +137,23 @@ public class StockSearchServletTest {
             throwsException = true;
         }
         assertFalse("doPost throws an exception", throwsException);
+    }
+
+    @Test
+    public final void testWebServicePositive() {
+        driver.get("http://localhost:8080/StockSearchWebApp/index.jsp");
+        driver.findElement(By.xpath("//a[@href='stockquote.jsp']")).click();
+        driver.findElement(By.name("symbol")).sendKeys("GOOG");
+        driver.findElement(By.name("startDate")).sendKeys("2016-04-23 00:00:00");
+        driver.findElement(By.name("endDate")).sendKeys("2016-07-23 00:00:00");
+        driver.findElement(By.xpath("//input[@value='WEB']")).click();
+        driver.findElement(By.xpath("//input[@value='OK']")).click();
+        element = driver.findElement(By.xpath("//*[text()='Stock Quote Search Result']"));
+        Assert.assertNotNull(element);
+    }
+
+    @AfterClass
+    public static void closeBrowser(){
+        driver.quit();
     }
 }

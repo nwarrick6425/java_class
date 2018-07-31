@@ -67,7 +67,7 @@ public class StockSearchServlet extends HttpServlet {
 
         ServletContext servletContext = getServletContext();
         RequestDispatcher dispatcher =
-                servletContext.getRequestDispatcher("/stocksearchResults.jsp");
+                servletContext.getRequestDispatcher("/stockquoteResults.jsp");
         dispatcher.forward(request, response);
     }
 }
