@@ -24,8 +24,8 @@
 <form name="myform" action="servlets/StockSearchServlet/" method="post">
     <fieldset>
         Stock Symbol: <br />    <input type="text" name="symbol"><br /><br />
-        Start Time: <br />      <input type="datetime-local" name="startDate"><br /><br />
-        End Time: <br />        <input type="datetime-local" name="endDate"><br /><br />
+        Start Time: <br />      <input type="text" name="startDate"><br /><br />
+        End Time: <br />        <input type="text" name="endDate"><br /><br />
         Interval: <br />        <input type="radio" name="interval" value="DAY" checked> Daily<br />
                                 <input type="radio" name="interval" value="WEEK"> Weekly<br />
                                 <input type="radio" name="interval" value="MONTH"> Monthly<br />

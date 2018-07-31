@@ -6,7 +6,7 @@
 
 <h3>
     <ul>
-        <li>To start a new Stock Quote search, click <a href="stockquote.jsp">here</a></li>
+        <li>To start a new Stock Quote search, click <a id="stockQuote" href="stockquote.jsp">here</a></li>
 
     </ul>
 </h3>

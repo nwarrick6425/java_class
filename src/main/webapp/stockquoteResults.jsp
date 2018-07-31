@@ -26,7 +26,7 @@ Here is the result of your stock search: <br />
 <c:out value="${search.quoteStr}"/>
 
 <p>
-    To start another stock quote search, click on the following link: <a href="' + document.referrer + '">Go Back </a>
+    To start another stock quote search, click on the following link: <a title="Go Back" href="' + document.referer + '">Go Back </a>
 </p>
 
 </body>
