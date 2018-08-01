@@ -19,7 +19,7 @@ jobs:
             - MYSQL_DATABASE: stocks
             - MYSQL_USER: monty
             - MYSQL_PASSWORD: some_pass
-      - image: circleci/tomcat:8.5.32-jre8
+      - image: tomcat:8.5.32-jre8
 
     working_directory: ~/repo
 
