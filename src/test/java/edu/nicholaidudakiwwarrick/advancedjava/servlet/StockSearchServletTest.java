@@ -52,7 +52,7 @@ public class StockSearchServletTest {
     @BeforeClass
     public static void openBrowser() throws Exception {
         System.setProperty("webdriver.gecko.driver", "web-drivers/geckodriver");
-        driver = new FirefoxDriver();
+        driver = new RemoteWebDriver(new URL("http://localhost:8080/StockSearchWebApp/"), DesiredCapabilities.firefox())
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
