@@ -35,9 +35,9 @@ jobs:
 
       - run: sudo gunzip -c geckodriver.tar.gz | tar xopf -
 
-      - run: sudo chmod +x geckodriver && mv geckodriver /home/ubuntu/bin/
+      - run: sudo chmod +x geckodriver && mv geckodriver /usr/local/bin/
 
-      - run: sudo PATH=$PATH:/home/unbuntu/bin/geckodriver
+      - run: sudo PATH=$PATH:/usr/local/bin/geckodriver
 
       # Download and cache dependencies
       - restore_cache:
