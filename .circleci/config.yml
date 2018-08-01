@@ -31,6 +31,14 @@ jobs:
       
       - run: sudo apt install -y mysql-client
 
+      - run:
+          name: Download Selenium
+          command: curl -O https://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar
+      -run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.9.1.jar
+          background: true
+
       # Download and cache dependencies
       - restore_cache:
           keys:
