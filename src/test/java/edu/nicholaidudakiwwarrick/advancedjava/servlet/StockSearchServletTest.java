@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertFalse;
@@ -25,11 +23,7 @@ import static org.mockito.Mockito.when;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.RemoteWebElement;
 
 /**
  * @author Nicholai Dudakiw-Warrick
@@ -38,7 +32,6 @@ public class StockSearchServletTest {
 
     private static HttpServletRequest request;
     private static HttpServletResponse response;
-    private static PrintWriter writer;
     private static StockSearchServlet servlet;
     private static final String SYMBOL_PARAMETER_KEY = "symbol";
     private static final String STARTDATE_PARAMETER_KEY = "startDate";
@@ -51,7 +44,7 @@ public class StockSearchServletTest {
 
     @BeforeClass
     public static void openBrowser() throws Exception {
-        System.setProperty("webdriver.gecko.driver", "web-drivers/geckodriver");
+        System.setProperty("webdriver.gecko.driver", "C:\\\\Users\\nwarr\\Downloads\\geckodriver-v0.21.0-win64\\geckodriver.exe");
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
@@ -143,7 +136,6 @@ public class StockSearchServletTest {
         assertFalse("doPost throws an exception", throwsException);
     }
 
-    @Test
     public final void testWebServicePositive() {
         driver.get("http://localhost:8080/StockSearchWebApp/index.jsp");
         driver.findElement(By.xpath("//a[@href='stockquote.jsp']")).click();
