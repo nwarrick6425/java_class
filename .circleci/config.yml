@@ -39,7 +39,7 @@ jobs:
 
       - run: sudo chmod +x geckodriver && mv geckodriver web-drivers/
 
-      - run: sudo PATH=$PATH:/usr/local/bin/geckodriver
+      - run: sudo export PATH=$PATH:/usr/local/bin/geckodriver
 
       # Download and cache dependencies
       - restore_cache:
