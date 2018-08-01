@@ -33,10 +33,12 @@ jobs:
 
       - run:
           name: Download Selenium
-          command: curl -O https://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar
+          command: |
+          curl -O https://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar
       -run:
           name: Start Selenium
-          command: java -jar selenium-server-standalone-3.9.1.jar
+          command: |
+          java -jar selenium-server-standalone-3.9.1.jar
           background: true
 
       # Download and cache dependencies
