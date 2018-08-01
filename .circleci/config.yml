@@ -35,7 +35,9 @@ jobs:
 
       - run: sudo gunzip -c geckodriver.tar.gz | tar xopf -
 
-      - run: sudo chmod +x geckodriver && mv geckodriver /usr/local/bin/
+      - run: mkdir web-drivers
+
+      - run: sudo chmod +x geckodriver && mv geckodriver web-drivers/
 
       - run: sudo PATH=$PATH:/usr/local/bin/geckodriver
 
