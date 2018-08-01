@@ -20,16 +20,6 @@ jobs:
             - MYSQL_USER: monty
             - MYSQL_PASSWORD: some_pass
 
-      - run:
-          name: Download Selenium
-          command: |
-          curl -O https://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar
-      - run:
-          name: Start Selenium
-          command: |
-          java -jar selenium-server-standalone-3.9.1.jar
-          background: true
-
     working_directory: ~/repo
 
     environment:
@@ -40,6 +30,14 @@ jobs:
       - checkout
       
       - run: sudo apt install -y mysql-client
+
+      - run: sudo wget -O geckodriver.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.21.0/geckodriver-v0.21.0-linux64.tar.gz
+
+      - run: sudo gunzip -c geckodriver.tar.gz | tar xopf -
+
+      - run: sudo chmod +x geckodriver && mv geckodriver /home/ubuntu/bin/
+
+      - run: sudo PATH=$PATH:/home/unbuntu/bin/geckodriver
 
       # Download and cache dependencies
       - restore_cache:
