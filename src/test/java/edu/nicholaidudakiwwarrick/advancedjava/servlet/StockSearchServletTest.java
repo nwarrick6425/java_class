@@ -42,7 +42,6 @@ public class StockSearchServletTest {
     private static WebDriver driver;
     WebElement element;
 
-    @BeforeClass
     public static void openBrowser() throws Exception {
         System.setProperty("webdriver.gecko.driver", "C:\\\\Users\\nwarr\\Downloads\\geckodriver-v0.21.0-win64\\geckodriver.exe");
         driver = new FirefoxDriver();
@@ -148,7 +147,6 @@ public class StockSearchServletTest {
         Assert.assertNotNull(element);
     }
 
-    @AfterClass
     public static void closeBrowser(){
         driver.quit();
     }
