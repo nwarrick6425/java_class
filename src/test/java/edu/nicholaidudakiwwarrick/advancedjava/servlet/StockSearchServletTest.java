@@ -22,6 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -42,11 +43,12 @@ public class StockSearchServletTest {
     private static final String INTERVAL_PARAMETER_KEY = "interval";
     private static final String SERVICETYPE_PARAMETER_KEY = "serviceType";
 
-    private static FirefoxDriver driver;
+    private static WebDriver driver;
     WebElement element;
 
     @BeforeClass
     public static void openBrowser() {
+        System.setProperty("webdriver.gecko.driver", "web-drivers/geckodriver");
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
