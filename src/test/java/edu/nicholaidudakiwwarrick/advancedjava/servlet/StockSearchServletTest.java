@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 /**
@@ -47,9 +50,9 @@ public class StockSearchServletTest {
     WebElement element;
 
     @BeforeClass
-    public static void openBrowser() {
+    public static void openBrowser() throws Exception {
         System.setProperty("webdriver.gecko.driver", "web-drivers/geckodriver");
-        driver = new FirefoxDriver();
+        driver = new RemoteWebDriver(new URL("http://localhost:8080/StockSearchWebApp/"), DesiredCapabilities.firefox());
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
