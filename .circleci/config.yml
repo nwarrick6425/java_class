@@ -19,7 +19,6 @@ jobs:
             - MYSQL_DATABASE: stocks
             - MYSQL_USER: monty
             - MYSQL_PASSWORD: some_pass
-      - image: tomcat:8.5.32-jre8
 
     working_directory: ~/repo
 
